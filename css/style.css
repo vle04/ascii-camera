@@ -1,13 +1,26 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f0f0;
+}
+
+.button {
+  font-family: monospace;
+  border: none;
+  /* padding: 8px 12px; */
+  /* border-radius: 100%; */
+  background-color: white;
+  font-size: 12px;
+}
+
+.button:hover {
+  color: lightblue;
 }

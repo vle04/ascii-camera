@@ -14,12 +14,15 @@ function setup() {
     video.hide();
 
     let button = createButton('colorize');
-    button.position(200, 100);
+    button.position(200, 120);
+    button.addClass('button');
     button.mousePressed(toggleColorize);
 }
 
 function draw() {
-    background(220);
+    background(255);
+
+    createTitle();
 
     video.loadPixels();
 
@@ -28,8 +31,6 @@ function draw() {
 
     let offsetX = (width - cols * cellSize) / 2;
     let offsetY = (height - rows * cellSize) / 2;
-
-    // let offsetX = displayWidth / 5.5;
 
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
@@ -65,4 +66,14 @@ function draw() {
 
 function toggleColorize() {
     colorize = !colorize;
+}
+
+function createTitle() {
+    push();
+        fill(0);
+        textSize(12);
+        textFont('monospace');
+        textAlign(CENTER);
+        text('a little ascii camera', width / 2, 75);
+    pop();
 }
