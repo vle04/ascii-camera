@@ -1,10 +1,17 @@
 let cellSize = 8;
-let asciiChar = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,^`'. ";
+let defaultChar = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,^`'. ";
+let asciiChar = defaultChar;
 let video;
 let colorize = false;
 
+let charsetInput;
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
+
+    charsetInput = createInput(defaultChar);
+    charsetInput.position(CENTER, 100);
+    charsetInput.size(400);
 
     textFont('monospace');
     textSize(cellSize);
@@ -14,7 +21,7 @@ function setup() {
     video.hide();
 
     let button = createButton('colorize');
-    button.position(200, 120);
+    button.position(200, 160);
     button.addClass('button');
     button.mousePressed(toggleColorize);
 }
@@ -23,14 +30,17 @@ function draw() {
     background(255);
 
     createTitle();
+    updateCharset();
 
     video.loadPixels();
+
+    let chars = Array.from(asciiChar);
 
     let cols = video.width;
     let rows = video.height;
 
     let offsetX = (width - cols * cellSize) / 2;
-    let offsetY = (height - rows * cellSize) / 2;
+    let offsetY = (height - rows * cellSize) / 2 + 50;
 
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
@@ -51,7 +61,7 @@ function draw() {
             let brightnessVal = (r + g + b) / 3;
             let charIndex = floor(map(brightnessVal, 0, 255, 0, asciiChar.length - 1));
 
-            let char = asciiChar[charIndex];
+            let char = chars[charIndex];
 
             if (colorize) {
                 fill(r, g, b);
@@ -75,5 +85,18 @@ function createTitle() {
         textFont('monospace');
         textAlign(CENTER);
         text('a little ascii camera', width / 2, 75);
+
+        text('insert characters to use for the camera!', width / 2, 90);
     pop();
+}
+
+function updateCharset() {
+    let value = charsetInput.value();
+
+    if (value.length === 0) {
+        asciiChar = defaultChar;
+        return;
+    }
+
+    asciiChar = value;
 }
